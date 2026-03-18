@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Segoe UI, Arial, sans-serif; font-size: 16px; color: #222; background: #f5f5f3; margin: 0; padding: 40px; min-height: 100vh; }
+  h1 { font-size: 22px; font-weight: 500; margin: 0 0 28px; }
+  .container { max-width: 960px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 36px 40px; border: 1px solid #e0e0e0; }
+  label { font-size: 13px; color: #666; display: block; margin-bottom: 6px; }
+  input[type=number], select { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 7px; font-size: 15px; background: #fff; }
+  input[type=range] { width: 100%; height: 6px; accent-color: #185FA5; }
+  .row { display: flex; gap: 16px; margin-bottom: 20px; }
+  .field { flex: 1; }
+  .slider-wrap { margin-bottom: 28px; }
+  .slider-labels { display: flex; justify-content: space-between; font-size: 12px; color: #aaa; margin-top: 6px; }
+  .alder-val { font-size: 16px; font-weight: 500; color: #222; }
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  th { font-size: 13px; color: #888; font-weight: 400; text-align: left; padding: 10px 16px; border-bottom: 1px solid #e0e0e0; }
+  td { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; font-size: 16px; }
+  tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; font-size: 13px; padding: 4px 14px; border-radius: 6px; font-weight: 500; }
+  .pris { font-size: 18px; font-weight: 500; }
+  .note { font-size: 12px; color: #aaa; margin-top: 16px; }
+  .divider { border: none; border-top: 1px solid #eee; margin: 24px 0; }
+  .section-label { font-size: 12px; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Frikøb af arbejdstelefon prisberegner</h1>
+
+  <div class="section-label">Medarbejderens telefon</div>
+  <div class="row">
+    <div class="field">
+      <label>Model</label>
+      <select id="nyprismodel" onchange="nyprisModelChanged()">
+        <optgroup label="iPhone 14 (2022)">
+          <option value="5599">iPhone 14 – 128 GB (5.599 kr.)</option>
+          <option value="6199">iPhone 14 – 256 GB (6.199 kr.)</option>
+          <option value="7399">iPhone 14 – 512 GB (7.399 kr.)</option>
+          <option value="6399">iPhone 14 Plus – 128 GB (6.399 kr.)</option>
+          <option value="6999">iPhone 14 Plus – 256 GB (6.999 kr.)</option>
+          <option value="8199">iPhone 14 Plus – 512 GB (8.199 kr.)</option>
+          <option value="7999">iPhone 14 Pro – 128 GB (7.999 kr.)</option>
+          <option value="8599">iPhone 14 Pro – 256 GB (8.599 kr.)</option>
+          <option value="9799">iPhone 14 Pro – 512 GB (9.799 kr.)</option>
+          <option value="10999">iPhone 14 Pro – 1 TB (10.999 kr.)</option>
+          <option value="8799">iPhone 14 Pro Max – 128 GB (8.799 kr.)</option>
+          <option value="9399">iPhone 14 Pro Max – 256 GB (9.399 kr.)</option>
+          <option value="10599">iPhone 14 Pro Max – 512 GB (10.599 kr.)</option>
+          <option value="11799">iPhone 14 Pro Max – 1 TB (11.799 kr.)</option>
+        </optgroup>
+        <optgroup label="iPhone 15 (2023)">
+          <option value="6239">iPhone 15 – 128 GB (6.239 kr.)</option>
+          <option value="6839">iPhone 15 – 256 GB (6.839 kr.)</option>
+          <option value="8039">iPhone 15 – 512 GB (8.039 kr.)</option>
+          <option value="7039">iPhone 15 Plus – 128 GB (7.039 kr.)</option>
+          <option value="7639">iPhone 15 Plus – 256 GB (7.639 kr.)</option>
+          <option value="8839">iPhone 15 Plus – 512 GB (8.839 kr.)</option>
+          <option value="7999">iPhone 15 Pro – 128 GB (7.999 kr.)</option>
+          <option value="8599">iPhone 15 Pro – 256 GB (8.599 kr.)</option>
+          <option value="9799">iPhone 15 Pro – 512 GB (9.799 kr.)</option>
+          <option value="10999">iPhone 15 Pro – 1 TB (10.999 kr.)</option>
+          <option value="9439">iPhone 15 Pro Max – 256 GB (9.439 kr.)</option>
+          <option value="10639">iPhone 15 Pro Max – 512 GB (10.639 kr.)</option>
+          <option value="11839">iPhone 15 Pro Max – 1 TB (11.839 kr.)</option>
+        </optgroup>
+        <optgroup label="iPhone 16e (2025)">
+          <option value="4399">iPhone 16e – 128 GB (4.399 kr.)</option>
+          <option value="5199">iPhone 16e – 256 GB (5.199 kr.)</option>
+          <option value="6399">iPhone 16e – 512 GB (6.399 kr.)</option>
+        </optgroup>
+        <optgroup label="iPhone 17e (2026)">
+          <option value="4399">iPhone 17e – 256 GB (4.399 kr.)</option>
+          <option value="5199">iPhone 17e – 512 GB (5.199 kr.)</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="field">
+      <label>Nypris ex moms (kr.)</label>
+      <input type="number" id="nypris" value="5599" min="0" step="100" oninput="update()">
+    </div>
+  </div>
+
+  <div class="section-label">Standardmodel</div>
+  <div class="row">
+    <div class="field">
+      <label>Model</label>
+      <select id="stdmodel" onchange="modelChanged()">
+        <option value="5599">iPhone 14 (5.599 kr. ex moms)</option>
+        <option value="6239">iPhone 15 (6.239 kr. ex moms)</option>
+        <option value="4399">iPhone 16e (4.399 kr. ex moms)</option>
+        <option value="4399">iPhone 17e (4.399 kr. ex moms)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Standardmodel nypris ex moms (kr.)</label>
+      <input type="number" id="stdpris" value="5599" min="0" step="100" oninput="update()">
+    </div>
+    <div class="field">
+      <label>Årlig afskrivning (%)</label>
+      <input type="number" id="afskrivning" value="25" min="1" max="60" step="1" oninput="update()">
+    </div>
+  </div>
+
+  <div class="slider-wrap">
+    <label>Alder: <span class="alder-val" id="alder-lbl">36 måneder</span></label>
+    <input type="range" min="0" max="72" value="36" step="1" id="alder" oninput="update()">
+    <div class="slider-labels">
+      <span>0 mdr.</span><span>12</span><span>24</span><span>36</span><span>48</span><span>60</span><span>72 mdr.</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:20%">Stand</th>
+        <th style="width:15%">Afskrivningsfaktor</th>
+        <th style="width:30%">Medarbejderpris</th>
+        <th style="width:35%">Egenbetaling</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <div class="note">Egenbetaling = differencen mellem Nypris og Standardmodel nypris &nbsp;·&nbsp; Priser er ex 25% moms ved lancering (ca.)</div>
+
+  <div style="margin-top:24px; border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; display:inline-block; min-width:340px;">
+    <div style="font-size:12px; font-weight:600; color:#666; padding:8px 14px; border-bottom:1px solid #e0e0e0; background:#fafafa;">Condition</div>
+    <div id="legend"></div>
+  </div>
+</div>
+
+<script>
+var stands = [
+  { name: "Very good", desc: "In perfect or near-perfect condition",                          factor: 1.0, color: "#0a5c44", bg: "#d4f0e4" },
+  { name: "Good",      desc: "Slight signs of wear, but fully functional",                    factor: 0.8, color: "#4a7a1e", bg: "#e2f5d0" },
+  { name: "OK",        desc: "Noticeable wear or minor cosmetic issues, still works as expected", factor: 0.5, color: "#7a4500", bg: "#fde8c0" },
+  { name: "Bad",       desc: "Significant wear or damage, but still fully operational",       factor: 0.2, color: "#8b1a1a", bg: "#fcd8d8" }
+];
+
+function nyprisModelChanged() {
+  var select = document.getElementById('nyprismodel');
+  document.getElementById('nypris').value = select.value;
+  update();
+}
+
+function modelChanged() {
+  var select = document.getElementById('stdmodel');
+  document.getElementById('stdpris').value = select.value;
+  update();
+}
+
+function update() {
+  var nypris = parseFloat(document.getElementById('nypris').value) || 0;
+  var stdpris = parseFloat(document.getElementById('stdpris').value) || 0;
+  var alder = parseInt(document.getElementById('alder').value);
+  var afsk = parseFloat(document.getElementById('afskrivning').value) / 100;
+  document.getElementById('alder-lbl').textContent = alder + ' måneder';
+
+  var depFactor = Math.pow(1 - afsk, alder / 12);
+  var baseStd = stdpris * depFactor;
+
+  var html = '';
+  var legendHtml = '';
+  stands.forEach(function(s) {
+    var pris = Math.round(nypris * depFactor * s.factor);
+    var stdPris = Math.round(baseStd * s.factor);
+    var egenbetaling = pris - stdPris;
+    var egenStr = egenbetaling > 0
+      ? '<span style="color:#8b1a1a; font-weight:500;">+' + egenbetaling.toLocaleString('da-DK') + ' kr.</span>'
+      : egenbetaling < 0
+        ? '<span style="color:#0a5c44; font-weight:500;">' + egenbetaling.toLocaleString('da-DK') + ' kr.</span>'
+        : '<span style="color:#aaa;">0 kr.</span>';
+
+    html += '<tr>'
+      + '<td><span class="badge" style="background:' + s.bg + ';color:' + s.color + ';">' + s.name + '</span></td>'
+      + '<td style="color:#888;">' + Math.round(s.factor * 100) + '%</td>'
+      + '<td class="pris">' + pris.toLocaleString('da-DK') + ' kr.</td>'
+      + '<td>' + egenStr + '</td>'
+      + '</tr>';
+
+    legendHtml += '<div style="display:flex;align-items:center;gap:10px;padding:7px 14px;border-bottom:1px solid #f0f0f0;">'
+      + '<span style="background:' + s.bg + ';color:' + s.color + ';font-size:13px;font-weight:600;padding:3px 12px;border-radius:5px;white-space:nowrap;">' + s.name + '</span>'
+      + '<span style="font-size:13px;color:#555;">' + s.desc + '</span>'
+      + '</div>';
+  });
+  document.getElementById('tbody').innerHTML = html;
+  document.getElementById('legend').innerHTML = legendHtml;
+}
+update();
+</script>
+</body>
+</html>
